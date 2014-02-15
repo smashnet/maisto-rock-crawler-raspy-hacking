@@ -50,3 +50,15 @@ Since I couldn't find something on the internet about this PCB I just grabbed my
 	
 	Steering right:
 	(M2-) ---- (2V) ---- (M2+)
+	
+##Hacking the control
+In order to control the car you just need to bridge a, b, c or d with the 3V pin shown in the picture below.
+
+| Pin | Function |
+|:---:| -------- |
+| a   | Steer left |
+| b   | Steer right |
+| c   | Drive backwards |
+| d   | Drive forwards |
+
+![PCB back detail](https://github.com/smashnet/maisto-rock-crawler-raspy-hacking/blob/master/pcb/pcb_back_detail.jpg?raw=true)
