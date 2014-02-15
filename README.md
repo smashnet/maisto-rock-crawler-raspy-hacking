@@ -13,3 +13,8 @@ Status
 ======
 
 The project just started so I'm currently figuring out how the internal PCB of the car works.
+
+PCB
+===
+
+![Backside of the main PCB](https://github.com/smashnet/maisto-rock-crawler-raspy-hacking/blob/master/pcb/pcb_back.jpg?raw=true)
