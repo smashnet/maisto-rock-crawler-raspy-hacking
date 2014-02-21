@@ -35,6 +35,31 @@ def render(js=None, **kwargs):
 def renderIndex():
   body = '''
   Welcome to Rover Control 1.0!<br/><br/>
-  <video id="video" src="rtp://raspberrypi:1234" autoplay="autoplay" />
+  <input type="range" name="speed" id="spid" onchange="SpeedChanged(this)"/>
+  <input type="range" name="steer" id="stid" onchange="SteeringChanged(this)"/>
+  <div id="speed_out">Speed:</div>
+  <div id="steer_out">Direction:</div>
   '''
-  return render(body=body)
+  css = '''
+  input[name="speed"] {
+    position: absolute;
+    -webkit-transform: rotate(270deg);
+    top: 100px;
+  }
+
+  input[name="steer"] {
+    margin-left: 300px;
+    margin-top: 100px;
+  }
+
+  div[id="speed_out"] {
+    margin-top: 150px;
+  }
+
+div[id="steer_out"] {
+    margin-top: 10px;
+  }
+
+  '''
+  js = ['main.js', 'jquery-2.1.0.min.js']
+  return render(body=body, css=css, js=js)

@@ -10,12 +10,16 @@ DRIVE_FORWARD = 23
 DRIVE_BACKWARD = 24
 
 def initGPIO():
+  GPIO.setwarnings(False)
   GPIO.setmode(GPIO.BCM)
 
   GPIO.setup(STEER_LEFT, GPIO.OUT, initial=GPIO.LOW)
   GPIO.setup(STEER_RIGHT, GPIO.OUT, initial=GPIO.LOW)
   GPIO.setup(DRIVE_FORWARD, GPIO.OUT, initial=GPIO.LOW)
   GPIO.setup(DRIVE_BACKWARD, GPIO.OUT, initial=GPIO.LOW)
+
+def cleanupGPIO():
+  GPIO.cleanup()
 
 def resetMotors():
   #Set everything to zero
@@ -46,11 +50,50 @@ def doTesting():
   time.sleep(0.2)
   GPIO.output(DRIVE_BACKWARD, GPIO.LOW)
 
-  
+def steerStraight():
+  try:
+    GPIO.output(STEER_RIGHT, GPIO.LOW)
+    GPIO.output(STEER_LEFT, GPIO.LOW)
+  except:
+    return 1
+  return 0
 
-initGPIO()
-print "Starting Rover test..."
-doTesting()
+def steerLeft():
+  try:
+    GPIO.output(STEER_RIGHT, GPIO.LOW)
+    GPIO.output(STEER_LEFT, GPIO.HIGH)
+  except:
+    return 1
+  return 0
 
-GPIO.cleanup()
-print "Test finished :-)"
+def steerRight():
+  try:
+    GPIO.output(STEER_LEFT, GPIO.LOW)
+    GPIO.output(STEER_RIGHT, GPIO.HIGH)
+  except:
+    return 1
+  return 0
+
+def driveStop():
+  try:
+    GPIO.output(DRIVE_BACKWARD, GPIO.LOW)
+    GPIO.output(DRIVE_FORWARD, GPIO.LOW)
+  except:
+    return 1
+  return 0
+
+def driveForward():
+  try:
+    GPIO.output(DRIVE_BACKWARD, GPIO.LOW)
+    GPIO.output(DRIVE_FORWARD, GPIO.HIGH)
+  except:
+    return 1
+  return 0
+
+def driveBackward():
+  try:
+    GPIO.output(DRIVE_FORWARD, GPIO.LOW)
+    GPIO.output(DRIVE_BACKWARD, GPIO.HIGH)
+  except:
+    return 1
+  return 0
