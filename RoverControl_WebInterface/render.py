@@ -4,62 +4,61 @@ BASE = '''
 <html>
   <head>
     %(js)s
+    %(css)s
     <style type="text/css">
       a {color: #0000e0;}
     </style>
-    <style type="text/css">
-      %(css)s
-    </style>
   </head>
-  <body style="font-family: arial;">
+  <body>
     %(body)s
   </body>
 </html>
 '''
 
-def render(js=None, **kwargs):
+def render(body=None, js=None, css=None):
   # prepare js definitions - optionally add a file given by @param js
-  s = '<script type="text/javascript" src="/static/%s">&#160;</script>'
-  jsfiles = []
-  if isinstance(js, basestring):
-    jsfiles.append(js)
-  elif isinstance(js, (list, tuple)):
-    jsfiles.extend(js)
+  js_line = '<script type="text/javascript" src="/static/js/%s">&#160;</script>'
+  css_line = '<link href="/static/css/%s" type="text/css" rel="stylesheet">'
 
-  jsdefs = [s % f for f in  jsfiles]
-  data = defaultdict(str)
-  data.update(kwargs)
-  data['js'] = '\n        '.join(jsdefs)
+  jsdefs = [js_line % f for f in js]
+  cssdefs = [css_line % f for f in css]
+  data = {}
+  data['body'] = body
+  data['js'] = '\n\t'.join(jsdefs)
+  data['css'] = '\n\t'.join(cssdefs)
   return BASE % data
 
 def renderIndex():
   body = '''
-  Welcome to Rover Control 1.0!<br/><br/>
-  <input type="range" name="speed" id="spid" onchange="SpeedChanged(this)"/>
-  <input type="range" name="steer" id="stid" onchange="SteeringChanged(this)"/>
-  <div id="speed_out">Speed:</div>
-  <div id="steer_out">Direction:</div>
+  <div class="container">
+    <div class="page-header">
+      <h1>Rover Control <small>Web Interface</small></h1>
+    </div>
+    <div class="row">
+      <div class="col-sm-1">
+        <button type="button" class="btn btn-default btn-lg" onMouseDown="PushedForward(this);" onMouseUp="ReleasedForward(this);">
+          <span class="glyphicon glyphicon-arrow-up"></span>
+        </button><br/>
+        <button type="button" class="btn btn-default btn-lg" onMouseDown="PushedBackward(this);" onMouseUp="ReleasedBackward(this);">
+          <span class="glyphicon glyphicon-arrow-down"></span>
+        </button>
+      </div>
+      <div class="col-sm-10">
+        <a href="#" class="thumbnail">
+          <img data-src="holder.js/800x533" alt="Rover camera stream">
+        </a>
+      </div>
+      <div class="col-sm-1">
+        <button type="button" class="btn btn-default btn-lg" onclick="ToggleRight(this);">
+          <span class="glyphicon glyphicon-arrow-right"></span>
+        </button><br/>
+        <button type="button" class="btn btn-default btn-lg" onclick="ToggleLeft(this);">
+          <span class="glyphicon glyphicon-arrow-left"></span>
+        </button>
+      </div>
+    </div>
+  </div>
   '''
-  css = '''
-  input[name="speed"] {
-    position: absolute;
-    -webkit-transform: rotate(270deg);
-    top: 100px;
-  }
-
-  input[name="steer"] {
-    margin-left: 300px;
-    margin-top: 100px;
-  }
-
-  div[id="speed_out"] {
-    margin-top: 150px;
-  }
-
-div[id="steer_out"] {
-    margin-top: 10px;
-  }
-
-  '''
-  js = ['main.js', 'jquery-2.1.0.min.js']
+  css = ['bootstrap.min.css', 'main.css']
+  js = ['jquery-2.1.0.min.js', 'bootstrap.min.js', 'holder.js', 'main.js']
   return render(body=body, css=css, js=js)

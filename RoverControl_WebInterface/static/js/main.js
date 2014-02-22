@@ -11,6 +11,31 @@ $.ajax(url, function (response) {
 });
 }
 
+function PushedForward(button) {
+
+}
+
+function ReleasedForward(button) {
+
+}
+
+function PushedBackward(button) {
+
+}
+
+function ReleasedBackward(button) {
+
+}
+
+function ToggleLeft(button) {
+  button.toggleClass('active');
+  console.log('Toggle left');
+}
+
+function ToggleRight(button) {
+
+}
+
 function SpeedChanged(slider) {
   var out = document.getElementById("speed_out")
   if (slider.value > 75 && lastSpeed <= 75) {

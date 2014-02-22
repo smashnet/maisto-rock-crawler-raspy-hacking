@@ -1,0 +1,12 @@
+input[name="speed"] {
+  -webkit-transform: rotate(270deg);
+  height: 300px;
+  width: 300px;
+}
+
+input[name="steer"] {
+  -webkit-transform: rotate(270deg);
+  height: 300px;
+  width: 300px;
+}
+
