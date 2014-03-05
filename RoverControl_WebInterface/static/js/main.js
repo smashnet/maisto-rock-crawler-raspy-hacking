@@ -5,6 +5,9 @@ var qURL = 'http://' + HOST + ':' + PORT + '/';
 var lastSpeed = 50;
 var lastSteer = 50;
 
+var steerLeft = false;
+var steerRight = false;
+
 function queryURL(url) {
 $.ajax(url, function (response) {
   console.log(response);
@@ -12,28 +15,39 @@ $.ajax(url, function (response) {
 }
 
 function PushedForward(button) {
-
+  queryURL(qURL + 'driveForward');
 }
 
 function ReleasedForward(button) {
-
+  queryURL(qURL + 'driveStop');
 }
 
 function PushedBackward(button) {
-
+  queryURL(qURL + 'driveBackward');
 }
 
 function ReleasedBackward(button) {
-
+  queryURL(qURL + 'driveStop');
 }
 
 function ToggleLeft(button) {
-  button.toggleClass('active');
-  console.log('Toggle left');
+  if(!steerLeft) {
+    steerLeft = true;
+    queryURL(qURL + 'steerLeft');
+  } else {
+    steerLeft = false;
+    queryURL(qURL + 'steerStraight');
+  }
 }
 
 function ToggleRight(button) {
-
+  if(!steerRight) {
+    steerRight = true;
+    queryURL(qURL + 'steerRight');
+  } else {
+    steerRight = false;
+    queryURL(qURL + 'steerStraight');
+  }
 }
 
 function SpeedChanged(slider) {
